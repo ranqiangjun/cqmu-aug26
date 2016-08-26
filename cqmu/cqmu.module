@@ -10,6 +10,12 @@ function cqmu_menu() {
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );
+  $items['item'] = array(
+    'title' => '重庆医科大学',
+    'page callback' => 'cqmu_item_page',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
   return $items;
 }
 
@@ -35,7 +41,7 @@ function cqmu_page() {
 
   $result = $query->execute();
 
-  // dpm($result);
+  dpm($result);
 
   if (isset($result['node'])) {
     $nids = array_keys($result['node']);
@@ -54,7 +60,7 @@ function cqmu_page() {
 
   foreach ($nodes as $index => $node) {
 
-    $html = $html . '<li><a href="node/' . $node->nid .'">' . $node->title .  '</a></li>';
+    $html = $html . '<li><a id="' . $node->nid . '" href="node/' . $node->nid .'">' . $node->title .  '</a></li>';
 
     // $html = $html . '<li><a href="?q=node/' . $node->nid .'">' . $node->title .  '</a></li>';
 
@@ -92,8 +98,23 @@ function cqmu_block_view($delta = '') {
   
     case 'cqmu':
       $block['subject'] = t('区块的标题');
-      $block['content'] = cqmu_page();
+      $block['content'] = '<div id="cqmu-list">' . cqmu_page() . '</div>';
       break;
   }
   return $block;
+}
+
+
+function cqmu_item_page($nid=1){
+	$node = node_load($nid);
+	$body = $node->body['und'][0]["safe_value"];
+	$title = $node->title;
+
+
+
+	return drupal_json_output(array(
+		"body" => $body,
+		"title" => $title
+	));
+	// return node_view($node);
 }

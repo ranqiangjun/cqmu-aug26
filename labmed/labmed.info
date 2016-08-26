@@ -1,0 +1,20 @@
+name = Lab Med
+description = 演示主题
+core = 7.x
+# base theme = bartik
+
+
+regions[header] = 顶部
+regions[right] = 右边
+regions[left] = 左边栏
+regions[footer] = 底部
+
+regions[content] = Content
+regions[help] = Help
+regions[page_top] = Page top
+regions[page_bottom] = Page bottom
+regions[highlighted] = Highlighted
+
+scripts[] = lebmed.js
+stylesheets[all][] = lebmed.css
+ 
