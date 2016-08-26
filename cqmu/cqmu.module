@@ -35,11 +35,11 @@ function cqmu_page() {
 
   $result = $query->execute();
 
-  dpm($result);
+  // dpm($result);
 
   if (isset($result['node'])) {
     $nids = array_keys($result['node']);
-    dpm($nids);
+    // dpm($nids);
   }
 
 
@@ -56,6 +56,8 @@ function cqmu_page() {
 
     $html = $html . '<li><a href="node/' . $node->nid .'">' . $node->title .  '</a></li>';
 
+    // $html = $html . '<li><a href="?q=node/' . $node->nid .'">' . $node->title .  '</a></li>';
+
   }
   // $html = $html . '<li><a href="node/3">第3篇文章</a></li>';
   // $html = $html . '<li><a href="node/8">第8篇文章</a></li>';
@@ -67,4 +69,31 @@ function cqmu_page() {
 
 }
 
+/**
+ * Implements hook_block_info().
+ */
+function cqmu_block_info() {
+ 
+  $blocks['cqmu'] = array(
+    'info' => t('重医区块'),
+    'cache' => DRUPAL_NO_CACHE
+  );
 
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function cqmu_block_view($delta = '') {
+  $block = array();
+
+  switch ($delta) {
+  
+    case 'cqmu':
+      $block['subject'] = t('区块的标题');
+      $block['content'] = cqmu_page();
+      break;
+  }
+  return $block;
+}
