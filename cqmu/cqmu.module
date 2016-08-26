@@ -1,1 +1,28 @@
 <?php
+
+/**
+ * Implements hook_menu().
+ */
+function cqmu_menu() {
+  $items['cqmu'] = array(
+    'title' => '重庆医科大学',
+    'page callback' => 'cqmu_page',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+/**
+ * 回调函数
+ * 第二行注释
+ */
+function cqmu_page() {
+  // return "重医你好！";
+  // return '欢迎了解 <a href="http://www.cqmu.edu.cn"> 重庆医科大学</a>';
+  // render array
+  return array(
+  	"#markup" => "<b>重医你好！</b>"
+  );
+
+}
